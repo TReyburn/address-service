@@ -31,11 +31,10 @@ func main() {
 }
 
 func parseFile(fh *os.File) []string {
+	defer fh.Close()
 
 	scanner := bufio.NewScanner(fh)
-
 	content := make([]string, 0)
-
 	for scanner.Scan() {
 		content = append(content, scanner.Text())
 	}
