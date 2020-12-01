@@ -1,4 +1,4 @@
-package addr_parser
+package
 
 import (
 	parser "github.com/openvenues/gopostal/parser"
