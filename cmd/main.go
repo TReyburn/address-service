@@ -6,14 +6,13 @@ import (
 	"os"
 
 	"../parser"
-	postal "github.com/openvenues/gopostal/parser"
 )
 
 func main() {
 	fn := os.Args[1]
 	res := parseFile(fn)
 
-	c := make(chan []postal.ParsedComponent)
+	c := make(chan parser.Address)
 
 	for _, x := range res {
 		go parser.ParseAddress(x, c)
