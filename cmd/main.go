@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"addr-parser/addr_parser"
+	"address-service/addr-parser"
 )
 
 func main() {
