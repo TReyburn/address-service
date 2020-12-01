@@ -5,12 +5,18 @@ import (
 	"fmt"
 	"os"
 
-	"../parser"
+	"github.com/TReyburn/address-service/parser"
 )
 
 func main() {
 	fn := os.Args[1]
-	res := parseFile(fn)
+	fh, err := os.Open(fn)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	res := parseFile(fh)
 
 	c := make(chan parser.Address)
 
@@ -24,13 +30,7 @@ func main() {
 
 }
 
-func parseFile(fn string) []string {
-	fh, err := os.Open(fn)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func parseFile(fh *os.File) []string {
 
 	scanner := bufio.NewScanner(fh)
 
