@@ -19,6 +19,10 @@ func TestConvertAddressHouse(t *testing.T) {
 	if res.house != "test house" {
 		t.Errorf("Expected 'test house' value for 'house' but got %+v", res.house)
 	}
+
+	if res.err != "" {
+		t.Errorf("Received an error: %+v", res.err)
+	}
 }
 
 func TestConvertAddressCategory(t *testing.T) {
@@ -33,5 +37,9 @@ func TestConvertAddressCategory(t *testing.T) {
 
 	if res.category != "test cat" {
 		t.Errorf("Expected 'test cat' value for 'category' but got %+v", res.category)
+	}
+
+	if res.err != "" {
+		t.Errorf("Received an error: %+v", res.err)
 	}
 }

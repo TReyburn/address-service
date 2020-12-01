@@ -28,6 +28,7 @@ type Address struct {
 	countryRegion string
 	country       string
 	worldRegion   string
+	err           string
 }
 
 // ParseAddress takes an address and a channel to coommunicate on
@@ -82,6 +83,7 @@ func convertAddress(pc []postal.ParsedComponent, c chan Address) {
 			addr.worldRegion = c.Value
 		default:
 			fmt.Println("Did not recognize", c.Label)
+			addr.err = c.Value
 		}
 	}
 	c <- addr
