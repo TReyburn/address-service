@@ -1,20 +1,21 @@
 package main
 
 import (
-	"../addr-parser"
 	"bufio"
 	"fmt"
 	"os"
+
+	"../parser"
 )
 
 func main() {
 	fn := os.Args[1]
-	res:= parseFile(fn)
+	res := parseFile(fn)
 
 	c := make(chan string)
 
 	for _, x := range res {
-		go addr_parser.ParseAddress(x, c)
+		go parser.ParseAddress(x, c)
 	}
 
 	for i := 1; i < len(res); i++ {
