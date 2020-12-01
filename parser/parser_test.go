@@ -43,3 +43,18 @@ func TestConvertAddressCategory(t *testing.T) {
 		t.Errorf("Received an error: %+v", res.err)
 	}
 }
+
+func TestConvertAddressBadStruct(t *testing.T) {
+	pc := postal.ParsedComponent{Label: "unexpected", Value: "bad label value"}
+	spc := []postal.ParsedComponent{pc}
+	c := make(chan Address)
+
+	go convertAddress(spc, c)
+
+	res := Address{}
+	res = <-c
+
+	if len(res.err) != 1 {
+		t.Errorf("Received incorrect error(s): %+v", res.err)
+	}
+}
