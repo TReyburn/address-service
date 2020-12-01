@@ -1,12 +1,43 @@
 package main
 
 import (
-	"fmt"
 	"../addr-parser"
+	"bufio"
+	"fmt"
+	"os"
 )
 
 func main() {
-	someStr := "20544 CR 138 Goshen IN 46526"
-	res := addr_parser.ParseAddress(someStr)
-	fmt.Println(res)
+	fn := os.Args[1]
+	res:= parseFile(fn)
+
+	c := make(chan string)
+
+	for _, x := range res {
+		go addr_parser.ParseAddress(x, c)
+	}
+
+	for i := 1; i < len(res); i++ {
+		_ = []string{<-c}
+	}
+
+}
+
+func parseFile(fn string) []string {
+	fh, err := os.Open(fn)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	scanner := bufio.NewScanner(fh)
+
+	content := make([]string, 0)
+
+	for scanner.Scan() {
+		content = append(content, scanner.Text())
+	}
+
+	return content
 }
