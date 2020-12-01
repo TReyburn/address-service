@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	addr_parser "github.com/TReyburn/address-service/addr-parser"
+	"../addr-parser"
 )
 
 func main() {
