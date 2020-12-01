@@ -1,8 +1,6 @@
 package parser
 
 import (
-	"fmt"
-
 	parser "github.com/openvenues/gopostal/parser"
 )
 
@@ -30,8 +28,8 @@ type address struct {
 }
 
 // ParseAddress takes an address and a channel to coommunicate on
-func ParseAddress(addr string, c chan string) {
+func ParseAddress(addr string, c chan []parser.ParsedComponent) {
 	parsed := parser.ParseAddress(addr)
-	fmt.Println(parsed)
-	c <- "finished"
+	// fmt.Println(parsed)
+	c <- parsed
 }
