@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 
-	parser "github.com/openvenues/gopostal/parser"
+	postal "github.com/openvenues/gopostal/parser"
 )
 
 // Address struct containing all possible address fields
@@ -32,11 +32,11 @@ type Address struct {
 
 // ParseAddress takes an address and a channel to coommunicate on
 func ParseAddress(addr string, c chan Address) {
-	parsed := parser.ParseAddress(addr)
+	parsed := postal.ParseAddress(addr)
 	go convertAddress(parsed, c)
 }
 
-func convertAddress(pc []parser.ParsedComponent, c chan Address) {
+func convertAddress(pc []postal.ParsedComponent, c chan Address) {
 	addr := Address{}
 	for _, c := range pc {
 		switch c.Label {
