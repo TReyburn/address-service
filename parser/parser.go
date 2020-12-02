@@ -1,11 +1,18 @@
 package parser
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/TReyburn/address-service/addresspb"
 	postal "github.com/openvenues/gopostal/parser"
 )
+
+// InitParser is a simple init to load our large C dll
+func InitParser() {
+	t := "test"
+	_ = postal.ParseAddress(t)
+	log.Println("Parser loaded")
+}
 
 // ParseAddress takes an address and a channel to coommunicate on
 func ParseAddress(addr string, c chan *addresspb.APResponse) {
@@ -58,7 +65,7 @@ func convertAddress(pc []postal.ParsedComponent, c chan *addresspb.APResponse) {
 		case "world_region":
 			addr.WorldRegion = c.Value
 		default:
-			fmt.Println("Did not recognize", c.Label)
+			log.Println("Did not recognize", c.Label)
 		}
 	}
 	c <- &addr
