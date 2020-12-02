@@ -3,88 +3,63 @@ package parser
 import (
 	"fmt"
 
+	"github.com/TReyburn/address-service/addresspb"
 	postal "github.com/openvenues/gopostal/parser"
 )
 
-// Address struct containing all possible address fields
-type Address struct {
-	house         string
-	category      string
-	near          string
-	houseNumber   string
-	road          string
-	unit          string
-	level         string
-	staircase     string
-	entrance      string
-	poBox         string
-	postcode      string
-	suburb        string
-	cityDistrict  string
-	city          string
-	island        string
-	stateDistrict string
-	state         string
-	countryRegion string
-	country       string
-	worldRegion   string
-	err           []string
-}
-
 // ParseAddress takes an address and a channel to coommunicate on
-func ParseAddress(addr string, c chan Address) {
+func ParseAddress(addr string, c chan *addresspb.APResponse) {
 	parsed := postal.ParseAddress(addr)
 	go convertAddress(parsed, c)
 }
 
-func convertAddress(pc []postal.ParsedComponent, c chan Address) {
-	addr := Address{}
+func convertAddress(pc []postal.ParsedComponent, c chan *addresspb.APResponse) {
+	addr := addresspb.APResponse{}
 	for _, c := range pc {
 		switch c.Label {
 		case "house":
-			addr.house = c.Value
+			addr.House = c.Value
 		case "category":
-			addr.category = c.Value
+			addr.Category = c.Value
 		case "near":
-			addr.near = c.Value
+			addr.Near = c.Value
 		case "house_number":
-			addr.houseNumber = c.Value
+			addr.HouseNumber = c.Value
 		case "road":
-			addr.road = c.Value
+			addr.Road = c.Value
 		case "unit":
-			addr.unit = c.Value
+			addr.Unit = c.Value
 		case "level":
-			addr.level = c.Value
+			addr.Level = c.Value
 		case "staircase":
-			addr.staircase = c.Value
+			addr.Staircase = c.Value
 		case "entrance":
-			addr.entrance = c.Value
+			addr.Entrance = c.Value
 		case "po_box":
-			addr.poBox = c.Value
+			addr.PoBox = c.Value
 		case "postcode":
-			addr.postcode = c.Value
+			addr.Postcode = c.Value
 		case "suburb":
-			addr.suburb = c.Value
+			addr.Suburb = c.Value
 		case "city_district":
-			addr.cityDistrict = c.Value
+			addr.CityDistrict = c.Value
 		case "city":
-			addr.city = c.Value
+			addr.City = c.Value
 		case "island":
-			addr.island = c.Value
+			addr.Island = c.Value
 		case "state_district":
-			addr.stateDistrict = c.Value
+			addr.StateDistrict = c.Value
 		case "state":
-			addr.state = c.Value
+			addr.State = c.Value
 		case "country_region":
-			addr.countryRegion = c.Value
+			addr.CountryRegion = c.Value
 		case "country":
-			addr.country = c.Value
+			addr.Country = c.Value
 		case "world_region":
-			addr.worldRegion = c.Value
+			addr.WorldRegion = c.Value
 		default:
 			fmt.Println("Did not recognize", c.Label)
-			addr.err = append(addr.err, c.Label)
 		}
 	}
-	c <- addr
+	c <- &addr
 }
