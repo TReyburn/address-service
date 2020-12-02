@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package address;
+option go_package = "/addresspb";
+
+message APRequest {
+  string address = 1;
+}
+
+message APResponse {
+  string house = 1;
+  string category = 2;
+  string near = 3;
+  string house_number = 4;
+  string road = 5;
+  string unit = 6;       
+  string level = 7;         
+  string staircase = 8;     
+  string entrance = 9;
+  string po_box = 10;
+  string postcode = 11;
+  string suburb = 12;
+  string city_district = 13;
+  string city = 14;
+  string island = 15;
+  string state_district = 16;
+  string state = 17;
+  string country_region = 18;
+  string country = 19;
+  string world_region = 20;
+}
+
+service AddressParseService {
+  rpc AddressParse(APRequest) returns (APResponse) {};
+}
