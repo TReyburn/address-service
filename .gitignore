@@ -17,3 +17,6 @@ main
 
 # IDE files
 .idea
+
+# Build dir
+/bin
