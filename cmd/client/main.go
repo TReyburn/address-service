@@ -38,8 +38,6 @@ func callAddressParse(c addresspb.AddressParseServiceClient, addr string) {
 	if err != nil {
 		log.Fatalln("Failed to call AddressParse", err)
 	}
-
-	// log.Println(resp)
 }
 
 func parseFile(fh *os.File) []string {

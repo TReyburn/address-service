@@ -1,2 +1,2 @@
 protoc addresspb/address.proto --go_out=plugins=grpc:.
-protoc addresspb/address.proto --python_out=.
+python -m grpc_tools.protoc -I. --python_out=pyclient --grpc_python_out=pyclient addresspb/address.proto
