@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TReyburn/address-service/addresspb"
 	"github.com/TReyburn/address-service/parser"
 )
 
@@ -18,7 +19,7 @@ func main() {
 
 	res := parseFile(fh)
 
-	c := make(chan parser.Address)
+	c := make(chan *addresspb.APResponse)
 
 	for _, x := range res {
 		go parser.ParseAddress(x, c)

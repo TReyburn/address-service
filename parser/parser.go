@@ -10,17 +10,17 @@ import (
 // InitParser is a simple init to load our large C dll
 func InitParser() {
 	t := "test"
-	_ = postal.ParseAddress(t)
-	log.Println("Parser loaded")
+	a := postal.ParseAddress(t)
+	log.Println("Parser loaded", a)
 }
 
 // ParseAddress takes an address and a channel to coommunicate on
-func ParseAddress(addr string, c chan *addresspb.APResponse) {
+func ParseAddress(addr string, ch chan *addresspb.APResponse) {
 	parsed := postal.ParseAddress(addr)
-	go convertAddress(parsed, c)
+	go convertAddress(parsed, ch)
 }
 
-func convertAddress(pc []postal.ParsedComponent, c chan *addresspb.APResponse) {
+func convertAddress(pc []postal.ParsedComponent, ch chan *addresspb.APResponse) {
 	addr := addresspb.APResponse{}
 	for _, c := range pc {
 		switch c.Label {
@@ -65,8 +65,9 @@ func convertAddress(pc []postal.ParsedComponent, c chan *addresspb.APResponse) {
 		case "world_region":
 			addr.WorldRegion = c.Value
 		default:
+			// What should we do here? How can make this unit testable without adding to our protobuf?
 			log.Println("Did not recognize", c.Label)
 		}
 	}
-	c <- &addr
+	ch <- &addr
 }
